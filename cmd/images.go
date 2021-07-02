@@ -1,11 +1,9 @@
 package cmd
 
 import (
-	"context"
+	
 	"fmt"
 
-	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/client"
 	docker "github.com/fsouza/go-dockerclient"
 	"github.com/mustafaerbay/golang-app/functions"
 	"github.com/spf13/cobra"
@@ -42,22 +40,5 @@ func getImages() {
 		fmt.Println("VirtualSize: ", functions.ByteCountSI(img.VirtualSize))
 		fmt.Println("ParentId: ", img.ParentID)
 		fmt.Println("")
-	}
-}
-
-func getImages2() {
-	ctx := context.Background()
-	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
-	if err != nil {
-		panic(err)
-	}
-
-	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
-	if err != nil {
-		panic(err)
-	}
-
-	for _, container := range containers {
-		fmt.Println(container.ID)
 	}
 }
