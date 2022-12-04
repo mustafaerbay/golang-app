@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+    common "github.com/mustafaerbay/golang-app/common"
 )
 
 
@@ -96,7 +97,22 @@ func Unzip(src, dest string) error {
     return nil
 }
 
-func Authentication(username string, url string) {
+var source = make(map[string]interface{}, 0)
 
-    
+func GetParameter(key string) interface{} {
+	if len(key) == 0 {
+		return nil
+	}
+	if len(source) == 0 {
+		if err := os.Open(common.InputsFilePath); err != nil {
+			log.Error(err)
+			return ""
+		}
+	}
+	value, ok := source[key]
+	if !ok {
+		log.Errorf("Key [%s] not found in inputs.json", key)
+		return nil
+	}
+	return value
 }
